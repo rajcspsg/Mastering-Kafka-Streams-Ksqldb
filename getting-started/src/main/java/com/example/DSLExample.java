@@ -7,6 +7,7 @@ import org.apache.kafka.common.serialization.Serdes;
 import java.util.Properties;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsConfig;
+
 public class DSLExample {
   public static void main(String[] args) {
     System.out.println("Hello World!!!");
@@ -14,11 +15,7 @@ public class DSLExample {
     StreamsBuilder builder = new StreamsBuilder();
     KStream<String, String> stream = builder.stream("users");
 
-    stream.foreach(
-      (key, value) -> {
-        System.out.println("(DSL) Hello, " + value);
-      });
-
+    stream.foreach((key, value) -> System.out.println("(DSL) Hello, " + value));
 
     // set the required properties for running Kafka Streams
     Properties config = new Properties();
@@ -34,6 +31,5 @@ public class DSLExample {
 
     // close Kafka Streams when the JVM shuts down (e.g. SIGTERM)
     Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
-
   }
 }
